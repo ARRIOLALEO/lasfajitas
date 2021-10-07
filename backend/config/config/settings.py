@@ -11,21 +11,19 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
+import dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2qnu3#nm(r_pyiw2@!d9f$xc=0b!t#1)+l6f_vyviql9_!hnpr'
-
+SECRET_KEY =os.environ.get('SECRET_KEY',default="4")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = int(os.environ.get('DEBUG',default=1))
+ALLOWED_HOSTS = ["0.0.0.0","localhost"]
 
 
 # Application definition
@@ -37,9 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #extrenals apps
-    'rest_framework',
-    'corsheaders',
     #local apps
     'restaurants',
 ]
@@ -47,7 +42,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,14 +49,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST=(
-    'http://localhost:8000',
-)
-REST_FRAMEWORK={
-    'DEFAULT_PERMISION_CLASSES':[
-        'rest_framework.permisions.AllowAny',
-    ]
-}
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
